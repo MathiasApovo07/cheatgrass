@@ -1,0 +1,20 @@
+Prototype v1 — 10 novembre 2026
+Périmètre : mode 1 saisonnier indépendant. HTML/CSS/JS sans dépendances.
+1. Tests déterministes avant implémentation : départ, frontières, concurrence, saisons, d100 strict, survie des graines, extinction.
+2. Moteur indépendant engine.js, puis suite Node complète.
+3. Interface anglaise app.js/index.html/styles.css : terrain, saisons à droite, compteurs, inspection, reset.
+4. Vérification navigateur grand/petit écran, clavier ; compte rendu.
+Hypothèses provisoires : huit voisins du sagebrush ; dépôt seulement sur vide ; Spring année 0 initial sans croissance ; extinction après transition ; reset efface l'essai.
+Le dé est inclus pour permettre un cycle complet. Graphique, modes 2/3, audio et textes définitifs DRI restent pour les étapes suivantes.
+Aucun autre jeu modifié. Pas de publication ni de commit.
+
+Étape graphique annuel — 10 novembre 2026
+Tests de l'historique et des coordonnées observés en échec avant implémentation, puis 18 tests passés.
+Ajouts history/fires au moteur sans modifier les règles ; nouveau chart.js ; section graphique/tableau dans app.js/index.html/styles.css.
+200 essais / 6944 actions : résultats du jeu identiques à la sauvegarde. Revue indépendante sans anomalie importante. Rendu visuel restant à vérifier manuellement.
+
+Étape mode 2 — 10 novembre 2026
+Réalisé : départ huit sagebrush sans cheatgrass, sélecteur anglais accessible avec aria-pressed, essais séparés conservés en mémoire, Reset du mode actif, textes adaptés et titre du graphique par mode.
+Mêmes transitions saisonnières et règle d100 strict ; seule la création initiale permet désormais de choisir le mode.
+27 tests passés. Régression mode 1 : 200 essais / 6944 actions identiques à la sauvegarde avant mode 2.
+Rendu visuel du nouveau sélecteur à vérifier manuellement. Aucun autre jeu modifié.

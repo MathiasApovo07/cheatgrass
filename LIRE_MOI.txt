@@ -1,0 +1,73 @@
+CHEATGRASS FIRE CYCLE — PROTOTYPE V1
+Mise à jour : graphique annuel, 10 novembre 2026.
+
+OUVRIR
+Double-cliquer index.html dans Edge, Chrome ou Firefox. Si déjà ouvert : Ctrl+F5.
+Next Season fait avancer les saisons ; Roll d100 lance le dé pendant la saison du feu.
+Cliquer une case pour une explication. Clavier : Tab pour atteindre le terrain, flèches pour le parcourir.
+Reset trial recommence l'essai et efface le graphique et les événements.
+
+GRAPHIQUE
+En bas du jeu : deux séries, sagebrush et cheatgrass (plantes uniquement).
+Un relevé au printemps APRÈS croissance du sagebrush. Pas de point initial année 0.
+Les points ronds/ligne continue distinguent sagebrush des carrés/pointillés du cheatgrass.
+Un triangle et une ligne verticale repèrent chaque incendie réel.
+Le feu est positionné au milieu des printemps concernés pour indiquer l'ordre, pas une durée saisonnière exacte.
+Un feu mettant fin à l'essai avant le printemps reste visible ; aucun relevé artificiel n'est ajouté.
+Un tableau repliable fournit toutes les mesures et la liste des feux.
+Sur petit écran, le graphique garde une largeur lisible et défile horizontalement dans sa zone.
+
+VALIDATION
+18 tests du moteur, historique et graphique passés.
+200 essais déterministes / 6944 actions : résultats écologiques identiques au moteur avant ajout, en ignorant les champs historiques.
+Syntaxe JavaScript et XML SVG vérifiés.
+Revue indépendante du code : aucune anomalie importante trouvée.
+Rendu visuel, clavier réel et lecteur d'écran : non vérifiés automatiquement ; l'outil navigateur a bloqué les fichiers locaux. Aucun contournement.
+Aucune certification Section 508 revendiquée.
+Sauvegarde des fichiers avant changement dans le dossier parent : documentation/before-annual-graph-2026-11-10.
+
+PÉRIMÈTRE
+Mode 1 saisonnier avec terrain, plantes/graines, feu, compteurs, inspection, extinction et graphique.
+Graphisme et textes explicatifs provisoires. Hypothèses conservées : huit voisins pour sagebrush, dépôt seulement sur vide, printemps initial année 0.
+Étapes ultérieures : validation des textes/règles encore ouvertes, mode sans cheatgrass, outils, audio.
+Aucune publication GitHub. Food, Water, Shelter et Fuel Density non modifiés.
+
+
+AMÉLIORATION DU RÉSULTAT D100 — 10 NOVEMBRE 2026
+Le test du gestionnaire de clic réel dans un adaptateur DOM minimal confirme le tirage puis le passage à Winter. Ce contrôle ne remplace pas un test visuel dans un navigateur.
+Résultat ajouté sous les commandes : grand nombre /100, WILDFIRE ou NO WILDFIRE, comparaison avec le seuil utilisé avant le feu, conséquence explicite. Le résultat précédent est masqué au nouveau tirage et au Reset.
+La zone de statut existante annonce aussi nombre, seuil et résultat.
+22 tests passés, dont clic sans feu, clic avec feu, égalité sans feu, Reset.
+Empreinte SHA256 de engine.js identique avant/après : règles et probabilités inchangées.
+Sauvegarde : documentation/before-dice-feedback-2026-11-10 dans le dossier parent.
+Recharger avec Ctrl+F5 pour voir la modification. Rendu visuel réel restant à vérifier, accès automatisé file précédemment bloqué.
+
+MODE SANS CHEATGRASS — 10 NOVEMBRE 2026
+Deux boutons permettent de comparer les écosystèmes :
+1. Cheatgrass & Sagebrush : 8 sagebrush et 4 cheatgrass au départ.
+2. Pre-settlement (no cheatgrass) : 8 sagebrush et aucun cheatgrass.
+Les saisons et les règles de croissance, de feu et de survie des graines restent identiques.
+Chaque mode conserve son terrain, ses tirages et son graphique pendant les changements de mode, tant que la page reste ouverte.
+Reset trial recommence uniquement le mode affiché. Recharger ou fermer la page efface les deux essais.
+Les dispositions et tirages sont aléatoires : comparer plusieurs essais, pas seulement un résultat isolé.
+Les textes de saison et de feu du mode 2 ne décrivent pas de cheatgrass présent.
+Validation actuelle : 27 tests passés, dont fonctionnement des boutons dans un adaptateur DOM, conservation des essais, reset indépendant, croissance et incendie sans cheatgrass.
+Régression mode 1 : 200 essais déterministes, 6944 actions identiques à la sauvegarde avant mode 2 (champ mode exclu de la comparaison).
+Rendu visuel et clavier réel du nouveau sélecteur : à vérifier manuellement dans le navigateur ; non validés par les tests Node.
+Sauvegarde : documentation/before-mode2-2026-11-10 dans le dossier parent.
+Le mode sans cheatgrass est désormais réalisé ; les outils de gestion et le son restent des étapes ultérieures.
+Aucune modification de Food, Water, Shelter ou Fuel Density. Aucune publication.
+
+MODE 3 — WILDFIRE MITIGATION STRATEGIES — 10 NOVEMBRE 2026
+Réalisé : troisième essai indépendant, départ 8 sagebrush + 4 cheatgrass ; règles saisonnières et moteur engine.js identiques à la sauvegarde (SHA256 vérifié).
+Hoe : sélectionner jusqu'à 5 plantes adultes, des deux espèces ; le cheatgrass mort est retiré avec les graines qu'il contient.
+Seed Bag : sélectionner jusqu'à 5 cases vides pour y placer des graines de sagebrush.
+Mower : sélectionner une case pour désigner sa rangée ou sa colonne ; tous les états végétaux y sont retirés.
+Choisir l'outil, sélectionner les cibles, vérifier le contour/v et cliquer Apply tool. Cancel selection annule sans consommer l'action. Une application par saison, même si moins de 5 cibles ont été sélectionnées.
+Choix d'interface documentés : outil utilisable dès le printemps initial, avant de quitter chaque saison ; durant Fire Season, avant le tirage uniquement. La progression et le changement de mode annulent la sélection non appliquée.
+Les trois essais et leurs graphiques sont conservés séparément en mémoire jusqu'au rechargement/fermeture. Reset trial réinitialise uniquement le mode actif.
+Les relevés annuels sont des instantanés du printemps après croissance ; une intervention ultérieure ne réécrit pas un point historique. Le journal des interventions précise saison, année, outil et nombre de cases changées.
+Prescribed Burn et Chemicals visibles mais désactivés, à la demande de Mathias. Questions préparées dans documentation/QUESTIONS_MODE3_ILEAH.txt (dossier parent), pour le mail de remise.
+Validation : 37 tests Node passent, dont sélection/aperçu/annulation/application par les gestionnaires réels dans un adaptateur DOM minimal. Rendu navigateur, tactile et lecteur d'écran non vérifiés automatiquement. Aucun contournement du blocage navigateur des fichiers locaux.
+Sauvegarde complète avant ajout : documentation/before-mode3-2026-11-10/prototype-v1.
+Aucune publication, aucun changement de Food, Water, Shelter ou Fuel Density.
