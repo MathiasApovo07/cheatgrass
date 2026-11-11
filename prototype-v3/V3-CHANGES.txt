@@ -1,0 +1,7 @@
+Cheatgrass v3 - Ileah feedback, 11 November 2026
+Copied from v2. Earlier versions unchanged.
+Fire chance equals fuel density (inclusive d100 threshold).
+No mitigation or skip action during the wildfire event.
+Simplified fire result uses pre-fire density; hidden after next season.
+Removed dice readout, probability dropdown and extra herbicide count explanation.
+Herbicide timing and other ecological rules unchanged.
