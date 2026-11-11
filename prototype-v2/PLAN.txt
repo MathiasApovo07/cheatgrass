@@ -1,0 +1,49 @@
+Prototype v1 — 10 novembre 2026
+Périmètre : mode 1 saisonnier indépendant. HTML/CSS/JS sans dépendances.
+1. Tests déterministes avant implémentation : départ, frontières, concurrence, saisons, d100 strict, survie des graines, extinction.
+2. Moteur indépendant engine.js, puis suite Node complète.
+3. Interface anglaise app.js/index.html/styles.css : terrain, saisons à droite, compteurs, inspection, reset.
+4. Vérification navigateur grand/petit écran, clavier ; compte rendu.
+Hypothèses provisoires : huit voisins du sagebrush ; dépôt seulement sur vide ; Spring année 0 initial sans croissance ; extinction après transition ; reset efface l'essai.
+Le dé est inclus pour permettre un cycle complet. Graphique, modes 2/3, audio et textes définitifs DRI restent pour les étapes suivantes.
+Aucun autre jeu modifié. Pas de publication ni de commit.
+
+Étape graphique annuel — 10 novembre 2026
+Tests de l'historique et des coordonnées observés en échec avant implémentation, puis 18 tests passés.
+Ajouts history/fires au moteur sans modifier les règles ; nouveau chart.js ; section graphique/tableau dans app.js/index.html/styles.css.
+200 essais / 6944 actions : résultats du jeu identiques à la sauvegarde. Revue indépendante sans anomalie importante. Rendu visuel restant à vérifier manuellement.
+
+Étape mode 2 — 10 novembre 2026
+Réalisé : départ huit sagebrush sans cheatgrass, sélecteur anglais accessible avec aria-pressed, essais séparés conservés en mémoire, Reset du mode actif, textes adaptés et titre du graphique par mode.
+Mêmes transitions saisonnières et règle d100 strict ; seule la création initiale permet désormais de choisir le mode.
+27 tests passés. Régression mode 1 : 200 essais / 6944 actions identiques à la sauvegarde avant mode 2.
+Rendu visuel du nouveau sélecteur à vérifier manuellement. Aucun autre jeu modifié.
+
+HERBICIDE — 11 November 2026
+Mode 3: select Pre-emergent Herbicide, drag with mouse or click two opposite corners, review the rectangle, then Apply tool. One action per season. H and hatching mark treated soil.
+Seeds are not removed immediately: cheatgrass seeds disappear at winter germination, sagebrush seeds at spring germination. Existing plants remain. Dead cheatgrass whose seeds were suppressed stays as seedless fuel, including after expiry; burning it does not recreate seeds.
+Duration interpretation for review: five seasonal transitions, through germination in the anniversary season; the marking then expires. Example: spring application blocks the following winter and spring germination. Overlap renews only selected cells. Reset clears treatment.
+Verification: 50 Node tests pass, including minimal-DOM application handlers. No independent rendered-browser, touch or screen-reader verification in this environment. No publication performed.
+
+CHOIX EXPLICITE PAR SAISON — 11 novembre 2026
+Mode 3 uniquement : Next Season (et le tirage en Fire Season) reste désactivé tant qu’un outil n’est pas appliqué ou que la croix rouge Skip mitigation this season n’est pas choisie. Annuler une sélection ne vaut pas passer. Le choix de passer consomme l’action de la saison, préserve le terrain et figure dans le journal. Le changement de mode conserve le choix ; Reset le réinitialise. Les modes 1 et 2 continuent directement.
+52 tests Node réussis, dont tests des gestionnaires via DOM minimal ; rendu navigateur à valider manuellement. Moteur, graphique et version 1 vérifiés inchangés. Aucune publication. Les autres changements de présentation et l’audio restent des étapes suivantes.
+
+PANNEAU COMPACT — 11 novembre 2026
+Outils déplacés dans la colonne droite, entre les saisons et Live counts. Instructions contextuelles selon le texte d’Ileah, complétées pour distinguer les deux orientations du mower. Explications longues conservées dans How to use the tools. Boutons sur deux colonnes, panneau pleine largeur sur petit écran. Les boutons restent textuels ; icônes et curseurs restent à faire.
+53 tests Node réussis. Moteur, mitigation.js, chart.js inchangés ; version 1 contrôlée par empreintes. Rendu visuel, zoom et tactile à vérifier manuellement ; aucune garantie de visibilité sans défilement sur tous les écrans. Pas de publication, aucune modification aux deux autres simulations.
+
+ICÔNES ET CURSEURS — 11 novembre 2026
+Six SVG locaux dans assets/tools : hoe, seed, mower-row, mower-column, burn, chemicals. Libellés conservés, images décoratives ignorées par les lecteurs d’écran. Curseur 32x32 avec point actif en 1,1 ; croix de secours si SVG non pris en charge. Curseur limité au terrain lors de la sélection, retiré après annulation, application, passage, changement de mode ou reset. Aucun curseur requis pour les interactions tactiles ou clavier.
+54 tests Node réussis. Moteur, mitigation.js, chart.js inchangés. Version 1 contrôlée par empreintes. Rendu navigateur des SVG et curseurs à confirmer manuellement. Autres simulations non modifiées. Pas de publication. Inclure le dossier assets lors du prochain upload.
+
+TEXTES ET AFFICHAGE — 11 novembre 2026
+Descriptions des modes et saisons actualisées selon Ileah ; adaptations explicites pour absence de cheatgrass et sol traité. Textes au-dessus du terrain retirés visuellement, aide clavier conservée pour accessibilité. Encadrés Fire season et What happened supprimés ; résultat dans les commandes des saisons, inspection dans un volet sous le terrain. Fuel density ajouté en tête des compteurs. See if a fire occurs remplace Roll d100.
+Règle strictement inférieure inchangée : chance réelle = max(0,densité-1) pour un d100 uniforme de 1 à 100. Exemple 12% de combustible, 11% de chance. Explication dépliable conservée. 56 tests réussis, y compris 101 densités x 100 tirages. Rendu visuel à confirmer manuellement. Animation et audio encore à faire. Aucun autre jeu modifié ni publication.
+
+FEU ET AUDIO — 11 novembre 2026
+Flammes sur les cases brûlées et éclairage orange inspirés de FWS v9, adaptés à la grille Cheatgrass, durée 2 secondes. Fonctionne pour incendie naturel et brûlage dirigé. Réduction des animations avec prefers-reduced-motion. Résultats immédiats, moteur inchangé. Effets arrêtés au changement de saison/mode, Reset et masquage de page.
+Copie indépendante de FWS v9 assets/audio/fire.mp3 dans assets/audio/fire.mp3, extrait 2 secondes à 75%, bouton Sound off/on (off par défaut). Échec de lecture audio non bloquant. 59 tests réussis dont son simulé et gestionnaires UI ; écoute et rendu réels à confirmer par utilisateur. Aucun autre jeu modifié ni publication. Inclure sound.js et assets/audio au prochain upload.
+
+CORRECTIONS AFFICHAGE APRÈS AUDIT — 11 novembre 2026
+Journal : Skip affiche Skipped mitigation sans undefined. Message herbicide : présence de cases effectivement encore traitées vérifiée via E.treated, et non simple présence d’anciens enregistrements. Aucun changement de durée ni de probabilité. 61 tests passent, dont les deux reproductions des défauts. Question à Ileah pour le mail : souhaite-t-elle conserver tirage strictement inférieur (densité 12%, chance 11%) ou aligner probabilité et densité ? Ne pas changer ce point avant sa précision.

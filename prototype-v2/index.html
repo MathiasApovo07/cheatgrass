@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Cheatgrass Fire Cycle · Seasonal prototype</title><link rel="stylesheet" href="styles.css"><script defer src="engine.js"></script><script defer src="chart.js"></script><script defer src="mitigation.js"></script><script defer src="sound.js"></script><script defer src="app.js"></script></head>
+<body><a class="skip" href="#advance">Skip to season controls</a><main>
+<header><div><p class="eyebrow" id="mode-title">SAGEBRUSH STEPPE · MODE 1</p><h1>Cheatgrass Fire Cycle</h1><p>Follow the seasons. Discover how an invasive grass changes an ecosystem.</p></div><button id="reset" class="secondary">Reset trial</button></header>
+<section class="mode-picker card" aria-labelledby="mode-heading">
+<h2 id="mode-heading">Compare ecosystems</h2>
+<div class="mode-buttons" role="group" aria-label="Ecosystem mode">
+<button id="mode-invaded" type="button" aria-pressed="true">1 · Cheatgrass &amp; Sagebrush</button>
+<button id="mode-native" type="button" aria-pressed="false">2 · Pre-settlement (no cheatgrass)</button>
+<button id="mode-mitigation" type="button" aria-pressed="false">3 · Wildfire Mitigation Strategies</button>
+</div>
+<p id="mode-description"></p><p class="hint">Each mode keeps its own trial and graph while this page is open. Switch to compare; Reset trial restarts only the selected mode. Random layouts and fire rolls vary between trials.</p>
+</section>
+
+<div class="workspace"><section class="terrain" aria-label="Ecosystem habitat">
+
+<p class="sr-only" id="grid-help">Select a square to learn about it. Use arrow keys to explore the board.</p>
+<div id="board" class="board" role="group" aria-label="Ecosystem, 10 rows by 10 columns" aria-describedby="grid-help"></div>
+<ul class="legend" id="legend" aria-label="Plant and seed legend"></ul><details><summary>Inspect a square</summary><p id="inspection" aria-live="polite" aria-atomic="true">Select a plant or seed to inspect it.</p></details>
+</section><aside>
+<section class="card season-card" aria-labelledby="season-heading"><p class="eyebrow" id="year">Starting year · 0</p><h2 id="season-heading">Spring</h2><button id="sound-toggle" type="button" class="secondary sound-toggle" aria-pressed="false">Sound: off</button><button id="advance">Next Season</button><p id="next-hint" class="hint"></p><div id="dice-result" class="dice-result" hidden>
+<p id="dice-caption" class="eyebrow">D100 RESULT</p>
+<p class="dice-number"><strong id="dice-value"></strong><span> / 100</span></p>
+<h3 id="dice-outcome"></h3><p id="dice-explanation"></p>
+</div><details class="fire-details"><summary>How fire probability is calculated</summary><p class="hint">A d100 roll from 1 to 100 must be strictly below the fuel density. For example, 12% fuel density means an 11% fire chance. Current threshold: <span id="threshold"></span>.</p><p id="fire-result">No roll yet.</p></details></section>
+<section id="tools-panel" class="card tools-panel" aria-labelledby="tools-heading" hidden>
+<h2 id="tools-heading">Wildfire Mitigation Strategies</h2>
+<p id="tool-instructions" class="hint" aria-live="polite" aria-atomic="true">Choose a tool to see its instructions.</p>
+<div class="tool-buttons" role="group" aria-label="Management tools">
+<button id="tool-hoe" type="button" aria-pressed="false"><img class="tool-icon" src="assets/tools/hoe.svg" alt="" aria-hidden="true" width="32" height="32"><span class="tool-label">Hoe</span></button>
+<button id="tool-seed" type="button" aria-pressed="false"><img class="tool-icon" src="assets/tools/seed.svg" alt="" aria-hidden="true" width="32" height="32"><span class="tool-label">Seed Bag</span></button>
+<button id="tool-mower-row" type="button" aria-pressed="false"><img class="tool-icon" src="assets/tools/mower-row.svg" alt="" aria-hidden="true" width="32" height="32"><span class="tool-label">Mower · row</span></button>
+<button id="tool-mower-column" type="button" aria-pressed="false"><img class="tool-icon" src="assets/tools/mower-column.svg" alt="" aria-hidden="true" width="32" height="32"><span class="tool-label">Mower · column</span></button>
+<button id="tool-burn" type="button" aria-pressed="false"><img class="tool-icon" src="assets/tools/burn.svg" alt="" aria-hidden="true" width="32" height="32"><span class="tool-label">Prescribed Burn</span></button>
+<button id="tool-chemicals" type="button" aria-pressed="false"><img class="tool-icon" src="assets/tools/chemicals.svg" alt="" aria-hidden="true" width="32" height="32"><span class="tool-label">Pre-emergent Herbicide</span></button>
+</div>
+<p id="tool-budget"></p><p id="tool-status" role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="tool-actions"><button id="tool-apply" type="button" disabled>Apply tool</button><button id="tool-cancel" type="button" class="secondary" disabled>Cancel selection</button></div>
+<button id="tool-skip" type="button" class="skip-mitigation"><span aria-hidden="true">✕</span> Skip mitigation this season</button>
+<details class="tool-help"><summary>How to use the tools</summary><p class="hint">Apply once per season, including the starting spring. During Fire Season, use your tool before selecting See if a fire occurs. Leaving a season or switching modes cancels unconfirmed selections. The graph keeps its original annual spring samples. For herbicide, you can also select two opposite corners with clicks or Enter/Space. Hatched squares marked H remain treated through the same season next year; established plants and dead fuel remain.</p></details>
+<details><summary>View management actions</summary><ul id="tool-log"></ul></details>
+</section>
+<section class="card" aria-labelledby="counts-heading"><h2 id="counts-heading">Live counts</h2><dl id="counts"></dl><p class="hint">Dead cheatgrass contains seeds, so it is counted as both a plant and a seed. After herbicide prevents germination, seedless dead cheatgrass remains a plant and fuel, but no longer counts as a seed.</p></section>
+
+</aside></div>
+<p id="feedback" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></p>
+<section class="card annual-chart" aria-labelledby="annual-heading">
+<h2 id="annual-heading">Annual plant populations</h2>
+<p class="hint">One sample each spring, after sagebrush seeds grow. Lines connect annual samples; they do not show changes within a year.</p>
+<ul class="chart-legend" aria-label="Graph legend"><li><span class="line-key sage-key" aria-hidden="true"></span>Sagebrush plants · circles</li><li><span class="line-key cheat-key" aria-hidden="true"></span>Cheatgrass plants · squares</li><li><span class="fire-key" aria-hidden="true">▲</span>Wildfire</li></ul>
+<p id="chart-summary" role="status" aria-live="polite" aria-atomic="true"></p>
+<div class="chart-scroll" tabindex="0" role="region" aria-label="Annual graph; scroll horizontally on small screens"><div id="annual-plot"></div></div>
+<p class="hint">Fire markers are placed between spring years to show their order, not an exact time interval.</p>
+<details><summary>View annual values and wildfire events</summary>
+<div class="table-scroll" tabindex="0" role="region" aria-label="Annual values"><table><caption>Spring plant counts after growth</caption><thead><tr><th scope="col">Spring year</th><th scope="col">Sagebrush plants</th><th scope="col">Cheatgrass plants</th></tr></thead><tbody id="annual-rows"></tbody></table></div>
+<h3>Wildfire events</h3><ul id="annual-fires"></ul>
+</details></section>
+<details class="notes"><summary>About this seasonal prototype</summary><p>This prototype lets you compare an invaded ecosystem with a pre-settlement ecosystem without cheatgrass. The annual graph records spring plant counts and wildfire events. Mode 3 adds Hoe, Seed Bag, Mower and Prescribed Burn. Pre-emergent Herbicide is available; fire animation and optional sound are available. Prescribed burns appear in the management log; the graph markers show natural wildfires. Explanations are draft text awaiting DRI review.</p><p>Provisional choices: sagebrush uses eight neighboring squares and only places seeds on empty squares. The initial spring is year 0; the first action enters summer. Reset starts a new trial.</p></details>
+</main></body></html>
+
+
+
+

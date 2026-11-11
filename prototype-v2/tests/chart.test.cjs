@@ -1,0 +1,4 @@
+const test=require('node:test'),assert=require('node:assert/strict'),C=require('../chart.js');
+test('chart plots two spring values and places fire between spring years',()=>{const d=C.layout([{year:1,sage:10,cheat:20},{year:2,sage:5,cheat:40}],[{year:1,roll:2,threshold:30}]);assert.equal(d.maxYear,2);assert.deepEqual(d.points.map(p=>[p.year,p.x,p.sageY,p.cheatY]),[[1,398,240,216],[2,736,252,168]]);assert.equal(d.markers[0].x,567);});
+test('fire before first sample remains visible without invented points',()=>{const d=C.layout([],[{year:0,roll:1,threshold:2}]);assert.equal(d.points.length,0);assert.equal(d.markers.length,1);assert.equal(d.markers[0].x,398);assert.equal(d.maxYear,1);});
+test('last fire extends time axis and earlier annual samples are retained',()=>{const d=C.layout([{year:1,sage:10,cheat:20}],[{year:3,roll:1,threshold:8}]);assert.equal(d.maxYear,4);assert.equal(d.points.length,1);assert.equal(d.markers[0].x,651.5);});
